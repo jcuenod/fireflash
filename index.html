@@ -1,0 +1,99 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+
+	<title>FireFlash</title>
+	<meta name="description" content="FireFlash">
+	<meta name="author" content="James Cuénod">
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+
+	<link rel="stylesheet" href="css/styles.css?v=1.0">
+	<script src="js/scripts.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<script lang="javascript">
+	$nextCard = null;
+	$currentCard = null;
+	$timerLine = null;
+
+	function timer_play()
+	{
+		$timerLine.css({left: "50%", right: "50%"});
+		$timerLine.animate({left: "0%", right: "0%"}, 5000, "linear");
+	}
+	function timer_pause()
+	{
+		$timerLine.stop();
+	}
+
+	$(document).ready(function(){
+		$currentCard = $("#card");
+		$nextCard = $("#card").clone();
+		$nextCard.addClass("no-transition");
+		$nextCard.addClass("is-offpage");
+		$(".container").append($nextCard);
+		$timerLine = $(".timer-line");
+		timer_play();
+	}).on("click touchend", "body", function(){
+		$(".timer-line").css("animation-play-state","paused");
+		return false;
+	}).on("click touchend", "#card", function(){
+		$(this).toggleClass("flipped");
+		$(".hoverbutton").toggleClass("show");
+		timer_pause();
+		return false;
+	}).on("click touchend", ".hoverbutton", function(){
+		var direction = 0;
+		var classToToggle = "";
+		if ($(this).hasClass("right-button"))
+		{
+			direction = "card-right";
+			classToToggle = "is-right";
+		}
+		else
+		{
+			direction = "card-left";
+			classToToggle = "is-wrong";
+		}
+		$("body").addClass(classToToggle);
+		window.setTimeout(function(){
+			$("body").removeClass(classToToggle);
+		}, 400);
+
+		$(".hoverbutton").toggleClass("show");
+		$currentCard.removeClass("flipped");
+		$currentCard.addClass(direction);
+		$nextCard.addClass("no-transition");
+
+		$nextCard.removeClass("is-offpage card-left card-right");
+		$nextCard.addClass( direction == "card-left" ? "card-right" : "card-left" );
+		// $nextCard.css("transform", "translateX(" + (-direction) + "vw)");
+		window.setTimeout(function(){
+			$nextCard.removeClass("no-transition");
+			$nextCard.removeClass( direction == "card-left" ? "card-right" : "card-left" );
+			// $nextCard.css("transform", "translateX(0)");
+			$tmpCard = $currentCard;
+			$currentCard = $nextCard;
+			$nextCard = $tmpCard;
+
+			timer_play();
+		}, 10)
+
+		return false;
+	});
+	</script>
+</head>
+
+<body>
+	<a href="#" class="hoverbutton wrong-button"></a>
+	<div class="timer-line"></div>
+	<section class="container">
+		<div id="card">
+			<figure class="front">ἀνοίγω</figure>
+			<figure class="back">to open</figure>
+		</div>
+	</section>
+	<a href="#" class="hoverbutton right-button"></a>
+</body>
+</html>
