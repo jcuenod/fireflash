@@ -1,46 +1,67 @@
-$nextCard = null;
-$currentCard = null;
-$timerLine = null;
+var cards = [
+	{
+		"side_one": 'ἀνοίγω',
+		"side_two": 'to open'
+	},{
+		"side_one": "ἐρῶ",
+		"side_two": "I shall say"
+	},{
+		"side_one": "ὧδε",
+		"side_two": "hither, here"
+	},{
+		"side_one": "εἶδον",
+		"side_two": "I saw (idea)"
+	},{
+		"side_one": "ἤδη",
+		"side_two": "now, already"
+	},{
+		"side_one": "ἐνώπιον",
+		"side_two": "with the gen., before"
+	},{
+		"side_one": "ἐγείρω",
+		"side_two": "I raise up"
+	},{
+		"side_one": "θεωρέω",
+		"side_two": "I look at, behold (theorem; theory)"
+	},{
+		"side_one": "πλείων, -ονος",
+		"side_two": "larger, more (pleonasm)"
+	},{
+		"side_one": "ὅπως",
+		"side_two": "in order that, that"
+	},{
+		"side_one": "ὅπου",
+		"side_two": "where, whither"
+	}
+];
+var card_index = 0;
+
+var $nextCard = null;
+var $currentCard = null;
+var $timerLine = null;
 
 function timer_play()
 {
-	$timerLine.css({left: "50%", right: "50%"});
-	$timerLine.animate({left: "0%", right: "0%"}, 5000, "linear");
+	$timerLine.css({width: "0%"});
+	$timerLine.animate({width: "100%"}, 5000, "linear");
 }
 function timer_pause()
 {
 	$timerLine.stop();
 }
 
-$(document).ready(function(){
-	$currentCard = $("#card");
-	$nextCard = $("#card").clone();
-	$nextCard.addClass("no-transition");
-	$nextCard.addClass("is-offpage");
-	$(".container").append($nextCard);
-	$timerLine = $(".timer-line");
-	timer_play();
-}).on("click touchend", "body", function(){
-	$(".timer-line").css("animation-play-state","paused");
-	return false;
-}).on("click touchend", "#card", function(){
-	$(this).toggleClass("flipped");
-	$(".hoverbutton").toggleClass("show");
-	timer_pause();
-	return false;
-}).on("click touchend", ".hoverbutton", function(){
-	var direction = 0;
-	var classToToggle = "";
-	if ($(this).hasClass("right-button"))
-	{
-		direction = "card-right";
-		classToToggle = "is-right";
-	}
-	else
-	{
-		direction = "card-left";
-		classToToggle = "is-wrong";
-	}
+function set_next_card_data()
+{
+	card_index++;
+	card_index = card_index % cards.length;
+	$nextCard.find(".front div").text(cards[card_index].side_one);
+	$nextCard.find(".back div").text(cards[card_index].side_two);
+}
+function next_card(got_it_right)
+{
+	var direction = got_it_right ? "card-right" : "card-left";
+	var classToToggle = got_it_right ? "is-right" : "is-wrong";
+
 	$("body").addClass(classToToggle);
 	window.setTimeout(function(){
 		$("body").removeClass(classToToggle);
@@ -61,9 +82,30 @@ $(document).ready(function(){
 		$tmpCard = $currentCard;
 		$currentCard = $nextCard;
 		$nextCard = $tmpCard;
+		set_next_card_data();
 
 		timer_play();
-	}, 10)
+	}, 100);
+}
 
+$(document).ready(function(){
+	$currentCard = $("#card");
+	$nextCard = $("#card").clone();
+	$nextCard.addClass("no-transition");
+	$nextCard.addClass("is-offpage");
+	set_next_card_data();
+	$(".main").append($nextCard);
+	$timerLine = $(".timer-line");
+	timer_play();
+}).on("click touchend", "body", function(){
+	$(".timer-line").css("animation-play-state","paused");
+	return false;
+}).on("click touchend", "#card", function(){
+	$(this).toggleClass("flipped");
+	$(".hoverbutton").toggleClass("show");
+	timer_pause();
+	return false;
+}).on("click touchend", ".hoverbutton", function(){
+	next_card($(this).hasClass("right-button"));
 	return false;
 });
