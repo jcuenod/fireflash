@@ -5,10 +5,6 @@ body {
   font-weight: bold;
   overflow: hidden;
 
-  display: flex;
-
-  flex-direction: column;
-
   font-weight: bold;
   text-align: center;
 
@@ -22,27 +18,35 @@ body.is-right > .timer-holder {
 }
 
 .timer-holder {
-  flex: 4vh;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+  box-sizing: border-box;
+  display: block;
+  height: 4vh;
+  margin: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 1vh;
+  text-align: center;
   transition: background-color 300ms ease-in-out;
 }
 .timer-holder > .timer-line {
   height: 2vh;
-  width: 0%;
+  width: 0;
   background-color: steelblue;
   border-radius: 1vh;
 }
 
 .main {
-  flex: 100%;
-  display: flex;
-  flex-direction: row;
+  position: absolute;
+  display: block;
+  left: 0;
+  right: 0;
+  top: 4vh;
+  bottom: 0;
   justify-content: center;
   align-items: center;
-    position: relative;
+    /*position: relative;*/
     perspective: 3000px;
 }
 
@@ -51,16 +55,17 @@ body.is-right > .timer-holder {
   transition: none !important;
 }
 #card {
+  margin: 0 auto;
   font-size: calc((5vw + 5vh) / 2);
+  margin-top: 10vh;
   width: 80%;
   height: 80%;
-  position: absolute;
   transform-style: preserve-3d;
   transition: transform 300ms ease-in-out;
 }
 
 #card figure {
-  display: table;
+  display: block;
   margin: 0;
   position: absolute;
   width: 100%;
@@ -88,9 +93,12 @@ body.is-right > .timer-holder {
   transform: rotateY( 180deg );
 }
 
-
-
-
+.card-right {
+  transform: translateX(100vw);
+}
+.card-left, .is-offpage {
+  transform: translateX(-100vw);
+}
 
 
 .hoverbutton {
@@ -126,13 +134,4 @@ body.is-right > .timer-holder {
   background: url("../images/check-mark.png");
   background-size: contain;
   color: #efe;
-}
-
-
-
-.card-right {
-  transform: translateX(100vw);
-}
-.card-left, .is-offpage {
-  transform: translateX(-100vw);
 }
