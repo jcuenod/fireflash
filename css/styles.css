@@ -61,7 +61,7 @@ body.is-right > .timer-holder {
   top: 7vh;
   left: 7%;
   right: 7%;
-  bottom: 6vh;
+  bottom: 7vh;
   font-size: calc((5vw + 5vh) / 2);
   transform-style: preserve-3d;
   transition: transform 400ms ease-in-out;
