@@ -68,7 +68,7 @@ body.is-right > .timer-holder {
 }
 
 #card figure {
-  display: block;
+  display: table;
   margin: 0;
   position: absolute;
   width: 100%;
@@ -77,12 +77,21 @@ body.is-right > .timer-holder {
   -webkit-backface-visibility: hidden;
   -webkit-transform: translate3d(0,0,0);
   visibility:visible;
+  padding: 0 calc((18vw + 18vh) / 2);
+  box-sizing: border-box;
 }
 
-#card div {
+#card figure::before {
   display: table-cell;
+  position: absolute;
+  height: 100%;
+  content: "";
   vertical-align: middle;
-  padding: 0 calc((18vw + 18vh) / 2);
+}
+#card div {
+  vertical-align: middle;
+  margin: auto;
+  display: table-cell;
 }
 #card .front {
   background: #ddf;
