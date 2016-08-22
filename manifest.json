@@ -1,0 +1,49 @@
+{
+  "start_url": "https://jcuenod.github.io/fireflash/",
+  "short_name": "fireflash",
+  "icons": [
+    {
+      "src": "https://jcuenod.github.io/fireflash/images/favicon/favicon-16x16.png",
+      "sizes": "16x16"
+    },
+    {
+      "src": "https://jcuenod.github.io/fireflash/images/favicon/favicon-48x48.png",
+      "sizes": "48x48"
+    },
+    {
+      "src": "https://jcuenod.github.io/fireflash/images/favicon/favicon-72x72.png",
+      "sizes": "72x72"
+    },
+    {
+      "src": "https://jcuenod.github.io/fireflash/images/favicon/favicon-96x96.png",
+      "sizes": "96x96"
+    },
+    {
+      "src": "https://jcuenod.github.io/fireflash/images/favicon/favicon-144x144.png",
+      "sizes": "144x144"
+    },
+    {
+      "src": "https://jcuenod.github.io/fireflash/images/favicon/favicon-152x152.png",
+      "sizes": "152x152"
+    },
+    {
+      "src": "https://jcuenod.github.io/fireflash/images/favicon/favicon-180x180.png",
+      "sizes": "180x180"
+    },
+    {
+      "src": "https://jcuenod.github.io/fireflash/images/favicon/favicon-192x192.png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "https://jcuenod.github.io/fireflash/images/favicon/favicon-512x512.png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "https://jcuenod.github.io/fireflash/images/favicon/favicon-120x120.png",
+      "sizes": "120x120"
+    }
+  ],
+  "display": "fullscreen",
+  "orientation": "any",
+  "name": "Fire Flash"
+}
