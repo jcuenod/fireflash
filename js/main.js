@@ -87,25 +87,3 @@ function next_card(got_it_right)
 		timer_play();
 	}, 100);
 }
-
-$(document).ready(function(){
-	$currentCard = $("#card");
-	$nextCard = $("#card").clone();
-	$nextCard.addClass("no-transition");
-	$nextCard.addClass("is-offpage");
-	set_next_card_data();
-	$(".main").append($nextCard);
-	$timerLine = $(".timer-line");
-	timer_play();
-}).on("click touchend", "body", function(){
-	$(".timer-line").css("animation-play-state","paused");
-	return false;
-}).on("click touchend", "#card", function(){
-	$(this).toggleClass("flipped");
-	$(".hoverbutton").toggleClass("show");
-	timer_pause();
-	return false;
-}).on("click touchend", ".hoverbutton", function(){
-	next_card($(this).hasClass("right-button"));
-	return false;
-});

@@ -1,15 +1,34 @@
 /* jshint esversion: 6 */
 class FlashCardController {
-	constructor(firebase_interface) {
+	constructor() {
 		this.currentCard = {};
 		this.cardHistory = [];
 		// this.cardFuture = []; (for if we go backwards - then we should also be able to go forwards - we just empty this if we go forwards in a way that doesn't use this but it actually exists)
 		this.card_index = 0;
-		this.firebase_interface = firebase_interface;
+		this.firebase_interface = new FirebaseInterface();
+
+		var self = this;
+		this.fcView = new FlashCardView(function(got_it_right, score, context) {
+			self.gotoNextCard();
+			console.log(self.currentCard);
+			self.fcView.set_imminent_card_data(self.currentCard.side_one, self.currentCard.side_two);
+			self.fcView.slide_card(got_it_right, context);
+		});
+			// this.scoreReportHandler(this));
 	}
-	getNextCard() {
-		this.nextCard();
-		return this.currrentCard;
+
+	scoreReportHandler(ctx) {
+		return function(got_it_right, score, context) {
+			var cc = ctx.gotoNextCard();
+			console.log(this.constructor.currentCard);
+			ctx.fcView.set_imminent_card_data(cc.side_one, cc.side_two);
+			ctx.fcView.slide_card(got_it_right, context);
+		};
+	}
+
+	gotoNextCard() {
+		this.currentCard = this.getNewCard();
+		return this.currentCard;
 	}
 	completeCard(rank) {
 		rankCurrentCard(rank);
